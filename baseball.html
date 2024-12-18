@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baseball Trivia App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        header {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+        }
+        main {
+            padding: 20px;
+            text-align: center;
+        }
+        h2 {
+            color: #007bff;
+        }
+        .question {
+            margin: 20px 0;
+            font-size: 1.2rem;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Baseball Trivia Game</h1>
+        <p>Test your baseball knowledge!</p>
+    </header>
+    <main>
+        <h2>Question:</h2>
+        <div id="question" class="question"></div>
+        <div id="answers"></div>
+        <button onclick="nextQuestion()">Next Question</button>
+        <div id="result"></div>
+    </main>
+
+    <script>
+        const triviaQuestions = [
+            {
+                question: "Who holds the MLB record for the most career home runs?",
+                answers: ["Babe Ruth", "Hank Aaron", "Barry Bonds", "Alex Rodriguez"],
+                correct: "Barry Bonds"
+            },
+            {
+                question: "Which team has won the most World Series titles?",
+                answers: ["New York Yankees", "Boston Red Sox", "Chicago Cubs", "St. Louis Cardinals"],
+                correct: "New York Yankees"
+            },
+            {
+                question: "What is the distance between the bases on a standard baseball field?",
+                answers: ["60 feet", "90 feet", "100 feet", "80 feet"],
+                correct: "90 feet"
+            },
+            {
+                question: "Who was the first African American to play in Major League Baseball?",
+                answers: ["Jackie Robinson", "Satchel Paige", "Willie Mays", "Hank Aaron"],
+                correct: "Jackie Robinson"
+            },
+            {
+                question: "In which year did the Chicago Cubs break their 108-year World Series drought?",
+                answers: ["2015", "2016", "2017", "2018"],
+                correct: "2016"
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+
+        function displayQuestion() {
+            const questionElement = document.getElementById("question");
+            const answersElement = document.getElementById("answers");
+            const resultElement = document.getElementById("result");
+
+            // Reset result and answers
+            resultElement.textContent = "";
+            answersElement.innerHTML = "";
+
+            // Display question
+            const currentQuestion = triviaQuestions[currentQuestionIndex];
+            questionElement.textContent = currentQuestion.question;
+
+            // Display answers
+            currentQuestion.answers.forEach(answer => {
+                const button = document.createElement("button");
+                button.textContent = answer;
+                button.onclick = () => checkAnswer(answer);
+                answersElement.appendChild(button);
+            });
+        }
+
+        function checkAnswer(selectedAnswer) {
+            const currentQuestion = triviaQuestions[currentQuestionIndex];
+            const resultElement = document.getElementById("result");
+
+            if (selectedAnswer === currentQuestion.correct) {
+                resultElement.textContent = "Correct! 🎉";
+                resultElement.style.color = "green";
+            } else {
+                resultElement.textContent = `Wrong! The correct answer was: ${currentQuestion.correct}`;
+                resultElement.style.color = "red";
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex >= triviaQuestions.length) {
+                currentQuestionIndex = 0; // Restart the game
+                alert("You've completed the trivia! Starting over.");
+            }
+            displayQuestion();
+        }
+
+        // Display the first question on page load
+        displayQuestion();
+    </script>
+</body>
+</html>
+
